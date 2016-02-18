@@ -1,18 +1,38 @@
-/**
- * Created by cecollins on 2/11/16.
- */
-
-
-
 $(document).ready(function() {
     loadNameDom();
     $('#post-name-button').on('click', clickPostNameData);
-    //$('#get-name-button').on('click', clickGetData);
-
     $('#server-results').on('click', 'button', postAnimalId);
+    $('#post-animal-button').on('click', sendAnimalData);
 
 });
 
+function sendAnimalData() {
+    event.preventDefault();
+
+    var values = {};
+
+    $.each($('#post-animal').serializeArray(), function(i, field) {
+        values[field.name] = field.value;
+    });
+
+    $('#post-animal').find('input[type=text]').val('');
+
+    $.ajax({
+        type: 'POST',
+        url: '/animal',
+        data: values,
+        beforeSend: function() {
+            console.log('before!' + values.name);
+        },
+        success: function(data) {
+            //refreshDom(data);
+            console.log('From Server: ', data);
+            console.log(data);
+        }
+    });
+
+
+}
 function clickPostNameData() {
     event.preventDefault();
 
@@ -41,18 +61,26 @@ function clickPostNameData() {
 
 }
 
-//function clickGetData() {
-//    event.preventDefault();
+//function loadDom() {
 //    $.ajax({
 //        type: 'GET',
-//        url: '/name',
+//        url: '/animal',
 //        success: function(data) {
-//            var arrayIndex = (getRandomInt(0, (data.length)));
-//            console.log(data[arrayIndex]);
-//            $('#random-results').append('<p id="randomName"> Randomly Selected Name: ' + data[arrayIndex].name + '</p>');
+//            refreshDom(data);
 //        }
 //    });
 //}
+
+//function refreshDom(array){
+//    $('#animal-results').empty();
+//
+//    for (var i = 0; i < array.length; i++){
+//        $('#animal-results').append('<p> Animals from Server: ' + array[i].spiritAnimal + 'Animal Color: ' + array[i].spiritAnimalColor + '</p>');
+//
+//    }
+//
+//}
+
 
 function loadNameDom() {
     $.ajax({
@@ -64,17 +92,13 @@ function loadNameDom() {
     });
 }
 
-//function getRandomInt(min, max) {
-//    return Math.floor(Math.random() * (max - min)) + min;
-//}
-
-function refreshNameDom(array){
+function refreshNameDom(data){
     $('#server-results').empty();
 
-    for (var i = 0; i < array.length; i++){
+    for (var i = 0; i < data.length; i++){
         $('#server-results').append('<div class="person-div"></div>');
         var $el = $('#server-results').children().last();
-        $el.append('<p> Names from Server: ' + array[i].name + '</p>');
+        $el.append('<p> Name: </p><p id="firstName">' + data[i].first_name + '</p><p id="lastName">' + data[i].last_name + '</p>');
        $el.append('<form class="person-form"><label for="animalId">' +
             'Animal ID: </label><input type="text" id="animalId" name="animalId" />' +
             '<button class="update">Update</button>');
@@ -90,8 +114,18 @@ function postAnimalId (){
     var animalIdValue = {};
 
     animalIdValue.name = $('#animalId').val();
+    animalIdValue.personfirst = $('#firstName').text();
+    animalIdValue.personlast = $('#lastName').text();
+
     console.log(animalIdValue);
 
-    //add in ajax call
+    $.ajax({
+        type: 'POST',
+        url: '/animal/id',
+        data: animalIdValue,
+        success: function(data){
+            console.log('Info from the server: ' + data);
+        }
+    });
 
 }

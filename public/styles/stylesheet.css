@@ -9,3 +9,7 @@ p {
 .person-div:nth-child(2n) {
     background: #ddd;
 }
+
+#animal-result {
+    float: right;
+}

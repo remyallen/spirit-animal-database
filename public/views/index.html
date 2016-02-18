@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello Node!</title>
+    <title>Animal Assigner Database</title>
     <script type="text/javascript" src="/vendors/jquery.min.js"></script>
-    <script type="text/javascript" src="/scripts/name.js"></script>
-    <script type="text/javascript" src="/scripts/animal.js"></script>
+    <script type="text/javascript" src="/scripts/clientapp.js"></script>
     <link rel="stylesheet" href="/styles/stylesheet.css"/>
 </head>
 <body>
-    <h1>Welcome to Node!</h1>
+    <h1>Animal Assigner Database</h1>
+    <h2>Take the High Node</h2>
     <form id="post-name">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" />
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" />
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" />
 
         <button id="post-name-button">Post!</button>
     </form>
     <form id="post-animal">
         <label for="spiritAnimal">Spirit Animal:</label>
         <input type="text" id="spiritAnimal" name="spiritAnimal" />
+        <label for="spiritAnimalColor">Spirit Animal Color:</label>
+        <input type="text" id="spiritAnimalColor" name="spiritAnimalColor" />
 
         <button id="post-animal-button">Post!</button>
     </form>
-    <div>
-        <button id="get-all">Get All Info</button>
-    </div>
     <div id="server-results"></div>
     <div id="animal-results"></div>
-    <div id="random-results"></div>
 </body>
 </html>

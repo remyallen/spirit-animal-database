@@ -5,7 +5,15 @@ var path = require('path');
 var nameData = require('./routes/nameData');
 var animalData = require('./routes/animalData');
 
+
+//bring in pg module
+
+
+app.use (bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+
 app.set('port', process.env.PORT || 5000);
 
 app.use('/name', nameData);
